@@ -1,27 +1,24 @@
 from twitchio.ext import commands
 import random
-import os
+from env import IRC, CLIENT
 
 
 class Bot(commands.Bot):
     def __init__(self):
         super().__init__(
-            irc_token=os.getenv("irc_token"),
-            client_id=os.getenv("client_id"),
+            irc_token=IRC,
+            client_id=CLIENT,
             nick="vimbott",
             prefix="!",
             initial_channels=["#doctorvim"],
         )
-
-    async def event_ready(self):
-        print(f"Ready | {self.nick}")
 
     async def event_message(self, message):
         await self.handle_commands(message)
 
     @commands.command(name="dot")
     async def dot(self, ctx):
-        await ctx.send("")
+        await ctx.send("https://github.com/justnat3/dotfiles")
 
     @commands.command(name="cproject")
     async def cproject(self, ctx):
@@ -50,8 +47,7 @@ class Bot(commands.Bot):
 
     @commands.command(name="roll")
     async def roll(self, ctx):
-        r = random.randint(0, 20)
-        await ctx.send(r)
+        await ctx.send(random.randint(0, 20))
 
     @commands.command(name="dan")
     async def dan(self, ctx):
